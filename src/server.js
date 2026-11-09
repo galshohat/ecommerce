@@ -1,6 +1,7 @@
 import express from 'express';
 import { pathToFileURL } from 'node:url';
 import { catalog, total } from './cart.js';
+import { paginate } from './orders.js';
 
 export const app = express();
 app.use(express.json());
@@ -15,7 +16,9 @@ app.post('/checkout', (req, res) => {
 });
 
 app.get('/orders', (req, res) => {
-  res.json([]);
+  const page = Number(req.query.page) || 1;
+  const size = Number(req.query.size) || 20;
+  res.json(paginate([], page, size));
 });
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
