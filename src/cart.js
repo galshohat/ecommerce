@@ -9,5 +9,7 @@ export function subtotal(items) {
 export function total(items, code) {
   const base = subtotal(items);
   if (!code) return base;
-  return base * (1 - discounts[code]);
+  const discount = discounts[code];
+  if (!discount) return base;
+  return base * (1 - discount);
 }
